@@ -12,13 +12,12 @@ export const Route = createFileRoute("/dashboard/")({
 
 function DashboardOverview() {
   const { user, listings, orders } = useApp();
+  const myListings = useMemo(() => listings.filter((l) => l.farmerId === user?.id), [listings, user?.id]);
+  const myOrdersAsFarmer = useMemo(() => orders.filter((o) => o.farmerId === user?.id), [orders, user?.id]);
+  const myOrdersAsConsumer = useMemo(() => orders.filter((o) => o.consumerId === user?.id), [orders, user?.id]);
+
   if (!user) return null;
-
   const isFarmer = user.role === "farmer";
-
-  const myListings = useMemo(() => listings.filter((l) => l.farmerId === user.id), [listings, user.id]);
-  const myOrdersAsFarmer = useMemo(() => orders.filter((o) => o.farmerId === user.id), [orders, user.id]);
-  const myOrdersAsConsumer = useMemo(() => orders.filter((o) => o.consumerId === user.id), [orders, user.id]);
 
   const weekRevenue = myOrdersAsFarmer
     .filter((o) => Date.now() - new Date(o.createdAt).getTime() < 7 * 86400000)
