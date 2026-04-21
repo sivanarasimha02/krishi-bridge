@@ -1,4 +1,7 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import { Toaster } from "@/components/ui/sonner";
+import { AppProvider } from "@/context/AppContext";
+import { ThemeProvider } from "@/context/ThemeContext";
 
 import appCss from "../styles.css?url";
 
@@ -29,21 +32,15 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "KrishiLink — Digital Bridge Between Farm & City" },
+      { name: "description", content: "Buy fresh produce directly from verified Indian farmers. KrishiLink eliminates middlemen with WhatsApp-first ordering and pincode-batched delivery." },
+      { name: "author", content: "KrishiLink" },
+      { property: "og:title", content: "KrishiLink — Digital Bridge Between Farm & City" },
+      { property: "og:description", content: "Direct farm-to-city marketplace for India. Verified farmers, fresh produce, fair prices." },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
-    ],
+    links: [{ rel: "stylesheet", href: appCss }],
   }),
   shellComponent: RootShell,
   component: RootComponent,
@@ -65,5 +62,12 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
-  return <Outlet />;
+  return (
+    <ThemeProvider>
+      <AppProvider>
+        <Outlet />
+        <Toaster richColors position="top-right" />
+      </AppProvider>
+    </ThemeProvider>
+  );
 }

@@ -9,38 +9,212 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as HowItWorksRouteImport } from './routes/how-it-works'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
+import { Route as DashboardVerificationRouteImport } from './routes/dashboard.verification'
+import { Route as DashboardProfileRouteImport } from './routes/dashboard.profile'
+import { Route as DashboardOrdersRouteImport } from './routes/dashboard.orders'
+import { Route as DashboardListingsRouteImport } from './routes/dashboard.listings'
+import { Route as DashboardBrowseRouteImport } from './routes/dashboard.browse'
 
+const HowItWorksRoute = HowItWorksRouteImport.update({
+  id: '/how-it-works',
+  path: '/how-it-works',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardIndexRoute = DashboardIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardVerificationRoute = DashboardVerificationRouteImport.update({
+  id: '/verification',
+  path: '/verification',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardProfileRoute = DashboardProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardOrdersRoute = DashboardOrdersRouteImport.update({
+  id: '/orders',
+  path: '/orders',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardListingsRoute = DashboardListingsRouteImport.update({
+  id: '/listings',
+  path: '/listings',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardBrowseRoute = DashboardBrowseRouteImport.update({
+  id: '/browse',
+  path: '/browse',
+  getParentRoute: () => DashboardRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
+  '/contact': typeof ContactRoute
+  '/dashboard': typeof DashboardRouteWithChildren
+  '/how-it-works': typeof HowItWorksRoute
+  '/dashboard/browse': typeof DashboardBrowseRoute
+  '/dashboard/listings': typeof DashboardListingsRoute
+  '/dashboard/orders': typeof DashboardOrdersRoute
+  '/dashboard/profile': typeof DashboardProfileRoute
+  '/dashboard/verification': typeof DashboardVerificationRoute
+  '/dashboard/': typeof DashboardIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
+  '/contact': typeof ContactRoute
+  '/how-it-works': typeof HowItWorksRoute
+  '/dashboard/browse': typeof DashboardBrowseRoute
+  '/dashboard/listings': typeof DashboardListingsRoute
+  '/dashboard/orders': typeof DashboardOrdersRoute
+  '/dashboard/profile': typeof DashboardProfileRoute
+  '/dashboard/verification': typeof DashboardVerificationRoute
+  '/dashboard': typeof DashboardIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
+  '/contact': typeof ContactRoute
+  '/dashboard': typeof DashboardRouteWithChildren
+  '/how-it-works': typeof HowItWorksRoute
+  '/dashboard/browse': typeof DashboardBrowseRoute
+  '/dashboard/listings': typeof DashboardListingsRoute
+  '/dashboard/orders': typeof DashboardOrdersRoute
+  '/dashboard/profile': typeof DashboardProfileRoute
+  '/dashboard/verification': typeof DashboardVerificationRoute
+  '/dashboard/': typeof DashboardIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/auth'
+    | '/contact'
+    | '/dashboard'
+    | '/how-it-works'
+    | '/dashboard/browse'
+    | '/dashboard/listings'
+    | '/dashboard/orders'
+    | '/dashboard/profile'
+    | '/dashboard/verification'
+    | '/dashboard/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/auth'
+    | '/contact'
+    | '/how-it-works'
+    | '/dashboard/browse'
+    | '/dashboard/listings'
+    | '/dashboard/orders'
+    | '/dashboard/profile'
+    | '/dashboard/verification'
+    | '/dashboard'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/auth'
+    | '/contact'
+    | '/dashboard'
+    | '/how-it-works'
+    | '/dashboard/browse'
+    | '/dashboard/listings'
+    | '/dashboard/orders'
+    | '/dashboard/profile'
+    | '/dashboard/verification'
+    | '/dashboard/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  AuthRoute: typeof AuthRoute
+  ContactRoute: typeof ContactRoute
+  DashboardRoute: typeof DashboardRouteWithChildren
+  HowItWorksRoute: typeof HowItWorksRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/how-it-works': {
+      id: '/how-it-works'
+      path: '/how-it-works'
+      fullPath: '/how-it-works'
+      preLoaderRoute: typeof HowItWorksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,21 +222,81 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard/': {
+      id: '/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof DashboardIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/verification': {
+      id: '/dashboard/verification'
+      path: '/verification'
+      fullPath: '/dashboard/verification'
+      preLoaderRoute: typeof DashboardVerificationRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/profile': {
+      id: '/dashboard/profile'
+      path: '/profile'
+      fullPath: '/dashboard/profile'
+      preLoaderRoute: typeof DashboardProfileRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/orders': {
+      id: '/dashboard/orders'
+      path: '/orders'
+      fullPath: '/dashboard/orders'
+      preLoaderRoute: typeof DashboardOrdersRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/listings': {
+      id: '/dashboard/listings'
+      path: '/listings'
+      fullPath: '/dashboard/listings'
+      preLoaderRoute: typeof DashboardListingsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/browse': {
+      id: '/dashboard/browse'
+      path: '/browse'
+      fullPath: '/dashboard/browse'
+      preLoaderRoute: typeof DashboardBrowseRouteImport
+      parentRoute: typeof DashboardRoute
+    }
   }
 }
 
+interface DashboardRouteChildren {
+  DashboardBrowseRoute: typeof DashboardBrowseRoute
+  DashboardListingsRoute: typeof DashboardListingsRoute
+  DashboardOrdersRoute: typeof DashboardOrdersRoute
+  DashboardProfileRoute: typeof DashboardProfileRoute
+  DashboardVerificationRoute: typeof DashboardVerificationRoute
+  DashboardIndexRoute: typeof DashboardIndexRoute
+}
+
+const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardBrowseRoute: DashboardBrowseRoute,
+  DashboardListingsRoute: DashboardListingsRoute,
+  DashboardOrdersRoute: DashboardOrdersRoute,
+  DashboardProfileRoute: DashboardProfileRoute,
+  DashboardVerificationRoute: DashboardVerificationRoute,
+  DashboardIndexRoute: DashboardIndexRoute,
+}
+
+const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
+  DashboardRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  AuthRoute: AuthRoute,
+  ContactRoute: ContactRoute,
+  DashboardRoute: DashboardRouteWithChildren,
+  HowItWorksRoute: HowItWorksRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}
