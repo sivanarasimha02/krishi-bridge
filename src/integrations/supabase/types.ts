@@ -195,7 +195,36 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      public_profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string | null
+          farm_name: string | null
+          full_name: string | null
+          id: string | null
+          is_verified: boolean | null
+          primary_crop: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string | null
+          farm_name?: string | null
+          full_name?: string | null
+          id?: string | null
+          is_verified?: boolean | null
+          primary_crop?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string | null
+          farm_name?: string | null
+          full_name?: string | null
+          id?: string | null
+          is_verified?: boolean | null
+          primary_crop?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       has_role: {
