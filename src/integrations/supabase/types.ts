@@ -14,16 +14,208 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      listings: {
+        Row: {
+          category: Database["public"]["Enums"]["produce_category"]
+          created_at: string
+          description: string | null
+          farmer_id: string
+          harvest_date: string | null
+          id: string
+          images: string[]
+          is_active: boolean
+          is_verified: boolean
+          name: string
+          pincode: string
+          price_per_kg: number
+          stock_kg: number
+          updated_at: string
+        }
+        Insert: {
+          category: Database["public"]["Enums"]["produce_category"]
+          created_at?: string
+          description?: string | null
+          farmer_id: string
+          harvest_date?: string | null
+          id?: string
+          images?: string[]
+          is_active?: boolean
+          is_verified?: boolean
+          name: string
+          pincode: string
+          price_per_kg: number
+          stock_kg: number
+          updated_at?: string
+        }
+        Update: {
+          category?: Database["public"]["Enums"]["produce_category"]
+          created_at?: string
+          description?: string | null
+          farmer_id?: string
+          harvest_date?: string | null
+          id?: string
+          images?: string[]
+          is_active?: boolean
+          is_verified?: boolean
+          name?: string
+          pincode?: string
+          price_per_kg?: number
+          stock_kg?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      orders: {
+        Row: {
+          consumer_id: string
+          consumer_name: string
+          consumer_phone: string
+          consumer_pincode: string
+          created_at: string
+          farmer_id: string
+          id: string
+          listing_id: string
+          notes: string | null
+          price_per_kg: number
+          product_image: string | null
+          product_name: string
+          quantity_kg: number
+          status: Database["public"]["Enums"]["order_status"]
+          total_price: number
+          updated_at: string
+        }
+        Insert: {
+          consumer_id: string
+          consumer_name: string
+          consumer_phone: string
+          consumer_pincode: string
+          created_at?: string
+          farmer_id: string
+          id?: string
+          listing_id: string
+          notes?: string | null
+          price_per_kg: number
+          product_image?: string | null
+          product_name: string
+          quantity_kg: number
+          status?: Database["public"]["Enums"]["order_status"]
+          total_price: number
+          updated_at?: string
+        }
+        Update: {
+          consumer_id?: string
+          consumer_name?: string
+          consumer_phone?: string
+          consumer_pincode?: string
+          created_at?: string
+          farmer_id?: string
+          id?: string
+          listing_id?: string
+          notes?: string | null
+          price_per_kg?: number
+          product_image?: string | null
+          product_name?: string
+          quantity_kg?: number
+          status?: Database["public"]["Enums"]["order_status"]
+          total_price?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "orders_listing_id_fkey"
+            columns: ["listing_id"]
+            isOneToOne: false
+            referencedRelation: "listings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          city: string | null
+          created_at: string
+          farm_name: string | null
+          full_name: string | null
+          id: string
+          is_verified: boolean
+          phone: string | null
+          pincode: string | null
+          primary_crop: string | null
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          city?: string | null
+          created_at?: string
+          farm_name?: string | null
+          full_name?: string | null
+          id: string
+          is_verified?: boolean
+          phone?: string | null
+          pincode?: string | null
+          primary_crop?: string | null
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          city?: string | null
+          created_at?: string
+          farm_name?: string | null
+          full_name?: string | null
+          id?: string
+          is_verified?: boolean
+          phone?: string | null
+          pincode?: string | null
+          primary_crop?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "farmer" | "consumer"
+      order_status:
+        | "pending"
+        | "confirmed"
+        | "packed"
+        | "out_for_delivery"
+        | "delivered"
+        | "cancelled"
+      produce_category: "vegetables" | "fruits" | "grains" | "dairy" | "other"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +342,17 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "farmer", "consumer"],
+      order_status: [
+        "pending",
+        "confirmed",
+        "packed",
+        "out_for_delivery",
+        "delivered",
+        "cancelled",
+      ],
+      produce_category: ["vegetables", "fruits", "grains", "dairy", "other"],
+    },
   },
 } as const
