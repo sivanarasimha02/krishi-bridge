@@ -11,6 +11,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { useApp } from "@/context/AppContext";
 import type { User, UserRole } from "@/lib/types";
 import { ArrowLeft, Sprout, ShoppingBasket, Upload } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const searchSchema = z.object({
   mode: z.enum(["login", "signup"]).optional().default("signup"),
@@ -42,21 +43,34 @@ function AuthPage() {
     fullName: "", pincode: "", city: "", farmName: "", primaryCrop: "", documentUrl: "",
   });
 
-  const handleSendOtp = (e: React.FormEvent) => {
+  const handleSendOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!/^\d{10}$/.test(phone)) {
       toast.error("Enter a valid 10-digit Indian mobile number");
       return;
     }
-    // TODO: Replace with Supabase Auth phone OTP (signInWithOtp)
-    toast.success("OTP sent! Use 123456 for demo.");
+    const { error } = await supabase.auth.signInWithOtp({ phone: `+91${phone}` });
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    toast.success("OTP sent to your phone");
     setStep("otp");
   };
 
-  const handleVerifyOtp = (e: React.FormEvent) => {
+  const handleVerifyOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     if (otp.length !== 6) {
       toast.error("Enter the 6-digit OTP");
+      return;
+    }
+    const { error } = await supabase.auth.verifyOtp({
+      phone: `+91${phone}`,
+      token: otp,
+      type: "sms",
+    });
+    if (error) {
+      toast.error(error.message);
       return;
     }
     setStep("profile");
@@ -143,8 +157,8 @@ function AuthPage() {
             <form onSubmit={handleVerifyOtp} className="mt-6 space-y-4">
               <div>
                 <Label htmlFor="otp">6-digit OTP</Label>
-                <Input id="otp" inputMode="numeric" maxLength={6} placeholder="123456" value={otp} onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))} className="mt-1.5 text-center text-lg tracking-[0.5em]" />
-                <p className="mt-2 text-xs text-muted-foreground">Sent to +91 {phone}. Use <span className="font-mono font-semibold">123456</span> for demo.</p>
+                <Input id="otp" inputMode="numeric" maxLength={6} placeholder="000000" value={otp} onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))} className="mt-1.5 text-center text-lg tracking-[0.5em]" />
+                <p className="mt-2 text-xs text-muted-foreground">Sent to +91 {phone}.</p>
               </div>
               <Button type="submit" className="w-full" size="lg">Verify OTP</Button>
             </form>
