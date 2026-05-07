@@ -43,21 +43,34 @@ function AuthPage() {
     fullName: "", pincode: "", city: "", farmName: "", primaryCrop: "", documentUrl: "",
   });
 
-  const handleSendOtp = (e: React.FormEvent) => {
+  const handleSendOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!/^\d{10}$/.test(phone)) {
       toast.error("Enter a valid 10-digit Indian mobile number");
       return;
     }
-    // TODO: Replace with Supabase Auth phone OTP (signInWithOtp)
-    toast.success("OTP sent! Use 123456 for demo.");
+    const { error } = await supabase.auth.signInWithOtp({ phone: `+91${phone}` });
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    toast.success("OTP sent to your phone");
     setStep("otp");
   };
 
-  const handleVerifyOtp = (e: React.FormEvent) => {
+  const handleVerifyOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     if (otp.length !== 6) {
       toast.error("Enter the 6-digit OTP");
+      return;
+    }
+    const { error } = await supabase.auth.verifyOtp({
+      phone: `+91${phone}`,
+      token: otp,
+      type: "sms",
+    });
+    if (error) {
+      toast.error(error.message);
       return;
     }
     setStep("profile");
