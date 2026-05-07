@@ -11,6 +11,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { useApp } from "@/context/AppContext";
 import type { User, UserRole } from "@/lib/types";
 import { ArrowLeft, Sprout, ShoppingBasket, Upload } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const searchSchema = z.object({
   mode: z.enum(["login", "signup"]).optional().default("signup"),
