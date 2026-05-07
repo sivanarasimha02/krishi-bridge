@@ -157,8 +157,8 @@ function AuthPage() {
             <form onSubmit={handleVerifyOtp} className="mt-6 space-y-4">
               <div>
                 <Label htmlFor="otp">6-digit OTP</Label>
-                <Input id="otp" inputMode="numeric" maxLength={6} placeholder="123456" value={otp} onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))} className="mt-1.5 text-center text-lg tracking-[0.5em]" />
-                <p className="mt-2 text-xs text-muted-foreground">Sent to +91 {phone}. Use <span className="font-mono font-semibold">123456</span> for demo.</p>
+                <Input id="otp" inputMode="numeric" maxLength={6} placeholder="000000" value={otp} onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))} className="mt-1.5 text-center text-lg tracking-[0.5em]" />
+                <p className="mt-2 text-xs text-muted-foreground">Sent to +91 {phone}.</p>
               </div>
               <Button type="submit" className="w-full" size="lg">Verify OTP</Button>
             </form>
